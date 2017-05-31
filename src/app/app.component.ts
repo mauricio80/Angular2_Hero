@@ -1,5 +1,23 @@
 import { Component } from '@angular/core';
 
+export class Hero {
+  id: number;
+  name: string;
+}
+
+const HEROES: Hero[] = [
+  { id: 11, name: 'Batman' },
+  { id: 12, name: 'Superman' },
+  { id: 13, name: 'Ironman' },
+  { id: 14, name: 'Narco' },
+  { id: 15, name: 'Magneta' },
+  { id: 16, name: 'Magneto' },
+  { id: 17, name: 'Wolverine' },
+  { id: 18, name: 'Gambito' },
+  { id: 19, name: 'Spiderman' },
+  { id: 20, name: 'Storm' }
+];
+
 @Component({
   selector: 'my-app',
   template: `
@@ -7,16 +25,19 @@ import { Component } from '@angular/core';
 
     <h2>Mis heroes</h2>
     <ul class="heroes">
-      <li *ngFor="let hero of heroes">
+      <li *ngFor="let hero of heroes" 
+          [class.selected] = "hero === heroSelected"
+          (click)="onSelect(hero)">
         <span class="badge">{{hero.id}}</span> {{hero.name}}
       </li>
     </ul>
-
-    <h2>{{hero.name}} detalles!</h2>
-    <div><label>id: </label> {{hero.id}} </div>
-    <div>
-      <label>name: </label> 
-      <input [(ngModel)]="hero.name" placeholder="name">
+    <div *ngIf="selectedHero">
+      <h2>{{selectedHero.name}} detalles!</h2>
+      <div><label>id: </label> {{selectedHero.id}} </div>
+      <div>
+        <label>name: </label> 
+        <input [(ngModel)]="selectedHero.name" placeholder="name">
+      </div>
     </div>
     `,
   styles: [`
@@ -73,26 +94,9 @@ import { Component } from '@angular/core';
 export class AppComponent  { 
   title = 'Tour de Heroes';
   heroes = HEROES;
-  hero : Hero = {
-    id: 1,
-    name: 'windstorm'
-  };
-}
+  selectedHero : Hero;
 
-export class Hero {
-  id: number;
-  name: string;
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+  }
 }
-
-const HEROES: Hero[] = [
-  { id: 11, name: 'Batman' },
-  { id: 12, name: 'Superman' },
-  { id: 13, name: 'Ironman' },
-  { id: 14, name: 'Narco' },
-  { id: 15, name: 'Magneta' },
-  { id: 16, name: 'Magneto' },
-  { id: 17, name: 'Wolverine' },
-  { id: 18, name: 'Gambito' },
-  { id: 19, name: 'Spiderman' },
-  { id: 20, name: 'Storm' }
-];
