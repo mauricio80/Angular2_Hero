@@ -1,18 +1,6 @@
 import { Component } from '@angular/core';
 import { Hero } from './hero';
-
-const HEROES: Hero[] = [
-  { id: 11, name: 'Batman' },
-  { id: 12, name: 'Superman' },
-  { id: 13, name: 'Ironman' },
-  { id: 14, name: 'Narco' },
-  { id: 15, name: 'Magneta' },
-  { id: 16, name: 'Magneto' },
-  { id: 17, name: 'Wolverine' },
-  { id: 18, name: 'Gambito' },
-  { id: 19, name: 'Spiderman' },
-  { id: 20, name: 'Storm' }
-];
+import { HeroService } from './hero.service';
 
 @Component({
   selector: 'my-app',
@@ -77,14 +65,17 @@ const HEROES: Hero[] = [
       margin-right: .8em;
       border-radius: 4px 0 0 4px;
     }
-  `]
+  `],
+  providers: [HeroService]
 })
 
 export class AppComponent  { 
   title = 'Tour de Heroes';
-  heroes = HEROES;
+  heroes: Hero[];
   selectedHero : Hero;
 
+  constructor(private heroService: HeroService) { }
+  
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
